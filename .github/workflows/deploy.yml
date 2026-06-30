@@ -1,0 +1,25 @@
+name: Pipeline CI/CD a PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main  # Se activa automáticamente al guardar cambios en la rama principal
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el codigo del repositorio
+      uses: actions/checkout@v3
+
+    - name: Desplegar el codigo al PaaS por API
+      run: |
+        curl --progress-bar -H "Authorization: Token ${{ secrets.PA_TOKEN }}" \
+          -F "content=@flask_app.py" \
+          https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/files/path/home/${{ secrets.PA_USERNAME }}/flask_app.py
+
+    - name: Reiniciar el Servidor Web (Reload)
+      run: |
+        curl -X POST -H "Authorization: Token ${{ secrets.PA_TOKEN }}" \
+          https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/${{ secrets.PA_USERNAME }}.pythonanywhere.com/reload/
