@@ -21,7 +21,7 @@ def home():
     </head>
     <body>
         <div class="card">
-            <h1>¡CI/CD desde GitHub Funcionando al 100%! 🚀🔥</h1>
+            <h1>Hola Ing </h1>
             <p>Esta aplicación fue desplegada con éxito por <strong>Britany</strong> usando CI/CD.</p>
         </div>
     </body>
